@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/pen_settings"
+        android:title="Pen Settings"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_brush"/>
+    <item android:id="@+id/color"
+        android:title="Color"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_color_lens"/>
+    <item android:id="@+id/undo"
+        android:title="Undo"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_undo"/>
+    <item android:id="@+id/redo"
+        android:title="Redo"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_redo"/>
+    <item android:id="@+id/clear"
+        android:title="Clear"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_delete_forever" />
+    <item android:id="@+id/randomize"
+        android:title="Randomize!"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_action_balloon" />
+</menu>
+
