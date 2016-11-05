@@ -35,7 +35,7 @@
         android:icon="@drawable/ic_phonelink_erase"
         />
     <item android:id="@+id/save_image"
-        android:title="Save Image"
+        android:title="Save doodle"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_save"
         />

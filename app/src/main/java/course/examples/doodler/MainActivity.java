@@ -130,13 +130,13 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.clear:
                 _doodleView.clear();
-                _doodleView.setBackgroundResource(0);
+                _doodleView.setBackgroundColor(getResources().getColor(R.color.white));
                 return true;
             case R.id.randomize:
                 _doodleView.randomize();
                 return true;
             case R.id.remove_image:
-                _doodleView.setBackgroundResource(0);
+                _doodleView.setBackgroundColor(getResources().getColor(R.color.white));
                 return true;
             case R.id.save_image:
                 _doodleView.setDrawingCacheEnabled(true);
@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                _doodleView.destroyDrawingCache();
                 return true;
             case R.id.camera:
                 Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);

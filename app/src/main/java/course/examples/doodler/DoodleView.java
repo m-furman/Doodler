@@ -63,6 +63,7 @@ public class DoodleView extends View {
     }
 
     private void init(AttributeSet  attrs, int defStyle) {
+        setBackgroundColor(getResources().getColor(R.color.white));
         currColor = Color.RED;
         currWidth = 32;
         currAlpha = 255;
