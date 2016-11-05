@@ -8,8 +8,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,9 @@ import android.widget.SeekBar;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -133,9 +138,30 @@ public class MainActivity extends AppCompatActivity {
             case R.id.remove_image:
                 _doodleView.setBackgroundResource(0);
                 return true;
+            case R.id.save_image:
+                _doodleView.setDrawingCacheEnabled(true);
+                Bitmap toSave = _doodleView.getDrawingCache();
+                File fPath = Environment.getExternalStorageDirectory();
+                File f = null;
+                f =  new File(fPath, "Doodler");
+                try {
+                    if(!f.exists()) {
+                        f.mkdirs();
+                    }
+                    String filename = "d" + UUID.randomUUID().toString();
+                    File myImageFile = new File(f.getAbsolutePath()+f.separator+filename+".png");
+                    FileOutputStream stream = new FileOutputStream(myImageFile);
+                    toSave.compress(Bitmap.CompressFormat.PNG, 80, stream);
+                    stream.close();
+                    Log.i("SAVE", "SAVE");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return true;
             case R.id.camera:
                 Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, PHOTO_REQUEST);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
