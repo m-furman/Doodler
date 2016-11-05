@@ -135,7 +135,7 @@ public class DoodleView extends View {
     public void randomize() {
         for (Stroke stroke: fullDoodle) {
             Random rnd = new Random();
-            stroke.getPaint().setARGB(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+            stroke.getPaint().setARGB(stroke.getPaint().getAlpha(), rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
         }
         invalidate();
     }

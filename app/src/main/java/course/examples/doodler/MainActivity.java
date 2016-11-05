@@ -170,9 +170,6 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PHOTO_REQUEST) {
-            //Bitmap image = (Bitmap) data.getExtras().get("data");
-            //Drawable drawable = new BitmapDrawable(getResources(), image);
-            //_doodleView.setBackground(drawable);
             // Find the last picture
             String[] projection = new String[]{
                     MediaStore.Images.ImageColumns._ID,
@@ -188,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
             if (cursor.moveToFirst()) {
                 String imageLocation = cursor.getString(1);
                 File imageFile = new File(imageLocation);
-                if (imageFile.exists()) {   // TODO: is there a better way to do this?
+                if (imageFile.exists()) {
                     Bitmap bm = BitmapFactory.decodeFile(imageLocation);
                     String imagePath = imageFile.getAbsolutePath();
                     Bitmap rotatedBitmap = ExifUtil.rotateBitmap(imagePath,bm);
