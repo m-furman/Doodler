@@ -142,6 +142,7 @@ public class DoodleView extends View {
 
     public void clear() {
         fullDoodle.clear();
+        undoStack.clear();
         invalidate();
     }
 

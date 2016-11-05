@@ -1,8 +1,14 @@
 package course.examples.doodler;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +19,11 @@ import android.widget.SeekBar;
 
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
+
+    public static final int PHOTO_REQUEST = 1;
 
     private DoodleView _doodleView;
     private ColorPicker colorPicker;
@@ -115,13 +125,49 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.clear:
                 _doodleView.clear();
+                _doodleView.setBackgroundResource(0);
                 return true;
             case R.id.randomize:
                 _doodleView.randomize();
                 return true;
+            case R.id.remove_image:
+                _doodleView.setBackgroundResource(0);
+                return true;
+            case R.id.camera:
+                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, PHOTO_REQUEST);
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PHOTO_REQUEST) {
+            //Bitmap image = (Bitmap) data.getExtras().get("data");
+            //Drawable drawable = new BitmapDrawable(getResources(), image);
+            //_doodleView.setBackground(drawable);
+            // Find the last picture
+            String[] projection = new String[]{
+                    MediaStore.Images.ImageColumns._ID,
+                    MediaStore.Images.ImageColumns.DATA,
+                    MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
+                    MediaStore.Images.ImageColumns.DATE_TAKEN,
+                    MediaStore.Images.ImageColumns.MIME_TYPE,
+            };
+            final Cursor cursor = getContentResolver()
+                    .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null,
+                            null, MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC");
+
+            if (cursor.moveToFirst()) {
+                String imageLocation = cursor.getString(1);
+                File imageFile = new File(imageLocation);
+                if (imageFile.exists()) {   // TODO: is there a better way to do this?
+                    Bitmap bm = BitmapFactory.decodeFile(imageLocation);
+                    String imagePath = imageFile.getAbsolutePath();
+                    Bitmap rotatedBitmap = ExifUtil.rotateBitmap(imagePath,bm);
+                    _doodleView.setBackground(new BitmapDrawable(getResources(), rotatedBitmap));
+                }
+            }
+        }
+    }
 }
