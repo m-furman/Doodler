@@ -6,6 +6,8 @@ A simple drawing app for the Android platform that I created for CMSC434 (Introd
 <img src="http://drive.google.com/uc?export=view&id=151VDRfntfgW5SlKBJloug6Miz2bfnmufhA" width="230" height="400" />
 </p>
 
+See the video demo here: https://www.youtube.com/watch?v=qZN2f09OoII
+
 ## How to run the program:
 Run the app on your device by clicking the "Run" button in Android Studio or clicking on the app icon. After the app launches, you will 
 see all the drawing options in the top action bar of the app. The first icon (from the left) in the action bar is the paint brush, 
